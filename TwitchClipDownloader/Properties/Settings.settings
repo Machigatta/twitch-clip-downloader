@@ -5,5 +5,8 @@
     <Setting Name="savePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\Armin\Desktop\_download\</Value>
     </Setting>
+    <Setting Name="twitchClientId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">h91ejo3shtecvixy0xhcd6mulvitd8</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

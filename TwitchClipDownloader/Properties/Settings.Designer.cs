@@ -34,5 +34,17 @@ namespace TwitchClipDownloader.Properties {
                 this["savePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("h91ejo3shtecvixy0xhcd6mulvitd8")]
+        public string twitchClientId {
+            get {
+                return ((string)(this["twitchClientId"]));
+            }
+            set {
+                this["twitchClientId"] = value;
+            }
+        }
     }
 }
