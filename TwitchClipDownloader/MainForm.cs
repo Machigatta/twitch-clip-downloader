@@ -93,7 +93,7 @@ namespace TwitchClipDownloader
                 //each clip -> log it
                 foreach (Clip item in result.clips)
                 {
-                    downloadCounter++;
+                    
                     bool isValidForDownload = false;
                     
                     if (sTime.Text != "")
@@ -106,10 +106,15 @@ namespace TwitchClipDownloader
                     }else
                     {
                         isValidForDownload = true;
+                        
                     }
 
                     if (isValidForDownload)
+                    {
+                        downloadCounter++;
                         mHandler.downloadClip(item);
+                    }
+                        
                 }
 
                 if (downloadCounter == 0)
