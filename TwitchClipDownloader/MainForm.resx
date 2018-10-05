@@ -133,6 +133,22 @@
         vLqHzg6vpvClYBGdGF7phUefz60hRFEURVEURVFUd73ePyMXloxLSnitAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>This program was written to make downloading clips, provided by twitch, easier.
+
+Version: 
+
+Filter Options:
+- Channel or Game
+- Language
+- Trending (popularity) or Not (viewcount)
+- Period (day, week, month, all) able to restrict by hours (1-48 hours)
+- Limit count of clips
+
+Features: 
+- Crawling Top Seen/Trending Clips filtered
+- Downloading by Slug / Link</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>

@@ -44,6 +44,10 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tCrawler = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.sTime = new System.Windows.Forms.DomainUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtChannel = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbLimit = new System.Windows.Forms.ComboBox();
             this.tDownloader = new System.Windows.Forms.TabPage();
@@ -65,6 +69,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pbDownload = new System.Windows.Forms.ToolStripProgressBar();
             this.toolTipText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.txtVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl.SuspendLayout();
             this.tCrawler.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -84,15 +89,15 @@
             this.cbGame.Items.AddRange(new object[] {
             "PLAYERUNKNOWN\'S BATTLEGROUNDS",
             "Fortnite"});
-            this.cbGame.Location = new System.Drawing.Point(99, 19);
+            this.cbGame.Location = new System.Drawing.Point(96, 13);
             this.cbGame.Name = "cbGame";
-            this.cbGame.Size = new System.Drawing.Size(472, 21);
+            this.cbGame.Size = new System.Drawing.Size(195, 21);
             this.cbGame.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 22);
+            this.label1.Location = new System.Drawing.Point(6, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 1;
@@ -113,7 +118,7 @@
             this.ckTrend.AutoSize = true;
             this.ckTrend.Checked = true;
             this.ckTrend.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckTrend.Location = new System.Drawing.Point(99, 126);
+            this.ckTrend.Location = new System.Drawing.Point(96, 123);
             this.ckTrend.Name = "ckTrend";
             this.ckTrend.Size = new System.Drawing.Size(68, 17);
             this.ckTrend.TabIndex = 3;
@@ -128,15 +133,15 @@
             "week",
             "month",
             "all"});
-            this.cbPeriod.Location = new System.Drawing.Point(99, 72);
+            this.cbPeriod.Location = new System.Drawing.Point(96, 66);
             this.cbPeriod.Name = "cbPeriod";
-            this.cbPeriod.Size = new System.Drawing.Size(472, 21);
+            this.cbPeriod.Size = new System.Drawing.Size(195, 21);
             this.cbPeriod.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 75);
+            this.label2.Location = new System.Drawing.Point(6, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 5;
@@ -145,8 +150,10 @@
             // rtLog
             // 
             this.rtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtLog.Location = new System.Drawing.Point(0, 0);
             this.rtLog.Name = "rtLog";
+            this.rtLog.ReadOnly = true;
             this.rtLog.Size = new System.Drawing.Size(583, 273);
             this.rtLog.TabIndex = 6;
             this.rtLog.Text = "";
@@ -180,7 +187,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 49);
+            this.label6.Location = new System.Drawing.Point(6, 43);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(58, 13);
             this.label6.TabIndex = 13;
@@ -188,7 +195,7 @@
             // 
             // txtLanguage
             // 
-            this.txtLanguage.Location = new System.Drawing.Point(99, 46);
+            this.txtLanguage.Location = new System.Drawing.Point(96, 40);
             this.txtLanguage.Name = "txtLanguage";
             this.txtLanguage.Size = new System.Drawing.Size(472, 20);
             this.txtLanguage.TabIndex = 14;
@@ -222,6 +229,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.sTime);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.txtChannel);
+            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.cbLimit);
             this.groupBox1.Controls.Add(this.cbPeriod);
@@ -233,15 +244,95 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(577, 154);
+            this.groupBox1.Size = new System.Drawing.Size(577, 238);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filter";
             // 
+            // sTime
+            // 
+            this.sTime.Items.Add("48");
+            this.sTime.Items.Add("47");
+            this.sTime.Items.Add("46");
+            this.sTime.Items.Add("45");
+            this.sTime.Items.Add("44");
+            this.sTime.Items.Add("43");
+            this.sTime.Items.Add("42");
+            this.sTime.Items.Add("41");
+            this.sTime.Items.Add("40");
+            this.sTime.Items.Add("39");
+            this.sTime.Items.Add("38");
+            this.sTime.Items.Add("37");
+            this.sTime.Items.Add("36");
+            this.sTime.Items.Add("35");
+            this.sTime.Items.Add("34");
+            this.sTime.Items.Add("33");
+            this.sTime.Items.Add("32");
+            this.sTime.Items.Add("31");
+            this.sTime.Items.Add("30");
+            this.sTime.Items.Add("29");
+            this.sTime.Items.Add("28");
+            this.sTime.Items.Add("27");
+            this.sTime.Items.Add("26");
+            this.sTime.Items.Add("25");
+            this.sTime.Items.Add("24");
+            this.sTime.Items.Add("23");
+            this.sTime.Items.Add("22");
+            this.sTime.Items.Add("21");
+            this.sTime.Items.Add("20");
+            this.sTime.Items.Add("19");
+            this.sTime.Items.Add("18");
+            this.sTime.Items.Add("17");
+            this.sTime.Items.Add("16");
+            this.sTime.Items.Add("15");
+            this.sTime.Items.Add("14");
+            this.sTime.Items.Add("13");
+            this.sTime.Items.Add("12");
+            this.sTime.Items.Add("11");
+            this.sTime.Items.Add("10");
+            this.sTime.Items.Add("9");
+            this.sTime.Items.Add("8");
+            this.sTime.Items.Add("7");
+            this.sTime.Items.Add("6");
+            this.sTime.Items.Add("5");
+            this.sTime.Items.Add("4");
+            this.sTime.Items.Add("3");
+            this.sTime.Items.Add("2");
+            this.sTime.Items.Add("1");
+            this.sTime.Location = new System.Drawing.Point(378, 66);
+            this.sTime.Name = "sTime";
+            this.sTime.Size = new System.Drawing.Size(190, 20);
+            this.sTime.TabIndex = 21;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(297, 69);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(75, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Time in Hours:";
+            // 
+            // txtChannel
+            // 
+            this.txtChannel.Location = new System.Drawing.Point(378, 13);
+            this.txtChannel.Name = "txtChannel";
+            this.txtChannel.Size = new System.Drawing.Size(190, 20);
+            this.txtChannel.TabIndex = 18;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(297, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(75, 13);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Channelname:";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 102);
+            this.label3.Location = new System.Drawing.Point(6, 99);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 16;
@@ -264,7 +355,7 @@
             "25",
             "50",
             "100"});
-            this.cbLimit.Location = new System.Drawing.Point(99, 99);
+            this.cbLimit.Location = new System.Drawing.Point(96, 96);
             this.cbLimit.Name = "cbLimit";
             this.cbLimit.Size = new System.Drawing.Size(472, 21);
             this.cbLimit.TabIndex = 15;
@@ -381,6 +472,7 @@
             // 
             // tAbout
             // 
+            this.tAbout.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.tAbout.Controls.Add(this.lbVersion);
             this.tAbout.Controls.Add(this.pictureBox1);
             this.tAbout.Controls.Add(this.label9);
@@ -391,11 +483,11 @@
             this.tAbout.Size = new System.Drawing.Size(583, 273);
             this.tAbout.TabIndex = 5;
             this.tAbout.Text = "About";
-            this.tAbout.UseVisualStyleBackColor = true;
             // 
             // lbVersion
             // 
             this.lbVersion.AutoSize = true;
+            this.lbVersion.ForeColor = System.Drawing.Color.White;
             this.lbVersion.Location = new System.Drawing.Point(68, 108);
             this.lbVersion.Name = "lbVersion";
             this.lbVersion.Size = new System.Drawing.Size(16, 13);
@@ -415,29 +507,30 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Consolas", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Font = new System.Drawing.Font("Corbel", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.White;
             this.label9.Location = new System.Drawing.Point(90, 15);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(413, 37);
+            this.label9.Size = new System.Drawing.Size(328, 39);
             this.label9.TabIndex = 1;
             this.label9.Text = "Twitch Clip Downloader";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.Control;
             this.label4.Location = new System.Drawing.Point(18, 81);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(381, 104);
+            this.label4.Size = new System.Drawing.Size(381, 182);
             this.label4.TabIndex = 0;
-            this.label4.Text = "This program was written to make downloading clips, provided by twitch, easier.\r\n" +
-    "\r\nVersion: \r\n\r\nFeatures: \r\n- Downloading by Slug\r\n- Downloading by Link\r\n- Crawl" +
-    "ing Top Seen/Trending Clips filtered";
+            this.label4.Text = resources.GetString("label4.Text");
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbDownload,
-            this.toolTipText});
+            this.toolTipText,
+            this.txtVersion});
             this.statusStrip1.Location = new System.Drawing.Point(0, 302);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(591, 22);
@@ -456,6 +549,15 @@
             this.toolTipText.Name = "toolTipText";
             this.toolTipText.Size = new System.Drawing.Size(0, 17);
             // 
+            // txtVersion
+            // 
+            this.txtVersion.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.Size = new System.Drawing.Size(374, 17);
+            this.txtVersion.Spring = true;
+            this.txtVersion.Text = "VERSION";
+            this.txtVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -468,7 +570,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Twitch Clip Downloader";
+            this.Text = "TCD - Twitch Clip Downloader";
             this.tabControl.ResumeLayout(false);
             this.tCrawler.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -529,6 +631,11 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lbVersion;
+        private System.Windows.Forms.TextBox txtChannel;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DomainUpDown sTime;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ToolStripStatusLabel txtVersion;
     }
 }
 

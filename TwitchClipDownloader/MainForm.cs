@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.IO;
 using TwitchClipDownloader.Classes;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 namespace TwitchClipDownloader
 {
@@ -30,7 +31,8 @@ namespace TwitchClipDownloader
             cbPeriod.SelectedIndex = 0;
             cbLimit.SelectedItem = "10";
             txtSave.Text = Properties.Settings.Default.savePath;
-            lbVersion.Text = this.ProductVersion.ToString();
+            lbVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+            txtVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
         }
 
  
@@ -40,7 +42,7 @@ namespace TwitchClipDownloader
             string downloadUri = "";
 
             //wird nur gecrawled wenn spiel angegeben
-            if (cbGame.Text != "")
+            if (cbGame.Text != "" || txtChannel.Text != "")
             {
                 baseUrl += "&game=" + cbGame.Text;
 
@@ -48,6 +50,12 @@ namespace TwitchClipDownloader
                 if (cbPeriod.Text != "")
                 {
                     baseUrl += "&period=" + cbPeriod.Text;
+                }
+
+                //channel speziefisch
+                if (txtChannel.Text != "")
+                {
+                    baseUrl += "&channel=" + txtChannel.Text;
                 }
 
                 //trending ist default auf false
@@ -86,15 +94,39 @@ namespace TwitchClipDownloader
                 foreach (Clip item in result.clips)
                 {
                     downloadCounter++;
-                    mHandler.downloadClip(item);
+                    bool isValidForDownload = false;
+                    
+                    if (sTime.Text != "")
+                    {
+                        if (DateTime.Now < item.created_at.AddHours(Int32.Parse(sTime.Text)))
+                        {
+                            isValidForDownload = true;
+                        }
+
+                    }else
+                    {
+                        isValidForDownload = true;
+                    }
+
+                    if (isValidForDownload)
+                        mHandler.downloadClip(item);
                 }
 
-                updateLog("---- Starting " + downloadCounter + " Downloads ----");
-                pbDownload.Maximum = downloadCounter;
+                if (downloadCounter == 0)
+                {
+                    bLookupTop.Enabled = true;
+                    updateLog("---- Could not find any clips ----");
+                }
+                else
+                {
+                    updateLog("---- Starting " + downloadCounter + " Downloads ----");
+                    pbDownload.Maximum = downloadCounter;
+                }
+                
             }
             else
             {
-                updateLog("Kein Spiel angegeben");
+                updateLog("Kein Spiel oder Channel angegeben");
             }
         }
 

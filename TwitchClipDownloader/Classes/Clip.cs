@@ -12,5 +12,6 @@ namespace TwitchClipDownloader.Classes
         public Broadcaster broadcaster { get; set; }
         public string title { get; set; }
         public Thumbnails thumbnails { get; set; }
+        public DateTime created_at { get; set; }
     }
 }
