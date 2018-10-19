@@ -21,6 +21,7 @@ namespace TwitchClipDownloader
     {
         public int downloadCounter = 0;
         private TwitchApiHandler mHandler = null;
+        private SortedDictionary<string, Clip> que = new SortedDictionary<string, Clip>();
         public MainForm()
         {
 
@@ -33,6 +34,16 @@ namespace TwitchClipDownloader
             txtSave.Text = Properties.Settings.Default.savePath;
             lbVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             txtVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+            chkAddToQue.Checked = Properties.Settings.Default.addToQue;
+            chkUbs.Checked = Properties.Settings.Default.brd;
+        }
+
+        private void saveLocals()
+        {
+            Properties.Settings.Default.savePath = txtSave.Text;
+            Properties.Settings.Default.addToQue = chkAddToQue.Checked;
+            Properties.Settings.Default.brd = chkUbs.Checked;
+            Properties.Settings.Default.Save();
         }
 
  
@@ -137,13 +148,7 @@ namespace TwitchClipDownloader
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.savePath = txtSave.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        private void btDownloadBySlug_Click(object sender, EventArgs e)
-        {
-            buildDownloadStringBySlug(txtSlug.Text);
+            saveLocals();
         }
 
         private async void buildDownloadStringBySlug(string slug)
@@ -154,6 +159,8 @@ namespace TwitchClipDownloader
             {
                 MessageBox.Show("Slug not valid.");
             }
+
+            
 
 
             string clipUri = "https://api.twitch.tv/kraken/clips/" + slug;
@@ -167,16 +174,45 @@ namespace TwitchClipDownloader
                 return;
             }
 
-            bLookupTop.Enabled = false;
-            downloadCounter++;
-            if (pbDownload.Maximum == 0)
+            if (que.ContainsKey(result.slug))
             {
-                pbDownload.Maximum = 1;
-            }else
-            {
-                pbDownload.Maximum++;
+                MessageBox.Show("Already in que.");
+                txtLink.Text = "";
+                txtSlug.Text = "";
+                if (chkUbs.Checked)
+                {
+                    txtPre.Text = "";
+                }
+                return;
             }
-            mHandler.downloadClip(result);
+
+            if (chkAddToQue.Checked)
+            {
+                result.pre = ( (chkUbs.Checked || txtPre.Text != "") ? ( (chkUbs.Checked) ? result.broadcaster.display_name : txtPre.Text ) : "" );
+                lbQue.Items.Add(Uri.EscapeUriString((result.pre != "" ? (result.pre + "_") : "") + result.slug) + ".mp4");
+                que.Add(result.slug, result);
+                txtLink.Text = "";
+                txtSlug.Text = "";
+                if (chkUbs.Checked)
+                {
+                    txtPre.Text = "";
+                }
+            }
+            else
+            {
+                bLookupTop.Enabled = false;
+                downloadCounter++;
+                if (pbDownload.Maximum == 0)
+                {
+                    pbDownload.Maximum = 1;
+                }
+                else
+                {
+                    pbDownload.Maximum++;
+                }
+                mHandler.downloadClip(result);
+            }
+            
         }
 
         //Basic Logging function
@@ -211,18 +247,66 @@ namespace TwitchClipDownloader
 
         private void btDownloadByLink_Click(object sender, EventArgs e)
         {
-            Match myMatch = Regex.Match(txtLink.Text, "[^/]+$");
-            if (myMatch.Success)
+            if(txtLink.Text != "")
             {
-                buildDownloadStringBySlug(myMatch.Value);
+                Match myMatch = Regex.Match(txtLink.Text, "[^/]+$");
+                if (myMatch.Success)
+                {
+                    buildDownloadStringBySlug(myMatch.Value);
+                }
+                else
+                {
+                    MessageBox.Show("Link not valid.");
+                }
             }
-            else
+            else if (txtLink.Text == "" && txtSlug.Text != "")
             {
-                MessageBox.Show("Link not valid.");
+                buildDownloadStringBySlug(txtSlug.Text);
+            }else
+            {
+                MessageBox.Show("Link or Slug missing.");
             }
+            
             
         }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            saveLocals();
+        }
+
+        private void chkUseBroadcasterAsPre_CheckedChanged(object sender, EventArgs e)
+        {
+            //saveLocals();
+        }
+
+        private void chkAddToQue_CheckedChanged(object sender, EventArgs e)
+        {
+            btDownloadByLink.Text = (chkAddToQue.Checked ? "Add" : "Download");
+            //saveLocals();
+        }
+
+        private void btStartDownloadQue_Click_1(object sender, EventArgs e)
+        {
+
+            foreach (KeyValuePair<string, Clip> pair in que)
+            {
+                downloadCounter++;
+                if (pbDownload.Maximum == 0)
+                {
+                    pbDownload.Maximum = 1;
+                }
+                else
+                {
+                    pbDownload.Maximum++;
+                }
+                mHandler.downloadClip(pair.Value);
+                
+                lbQue.Items.Remove(Uri.EscapeUriString((pair.Value.pre != "" ? (pair.Value.pre + "_") : "") + pair.Value.slug) + ".mp4");
+            }
+
+            que.Clear();
+        }
     }
       
 }

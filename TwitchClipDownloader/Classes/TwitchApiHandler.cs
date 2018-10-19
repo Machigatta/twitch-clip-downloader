@@ -42,7 +42,7 @@ namespace TwitchClipDownloader.Classes
             using (WebClient wc = new WebClient())
             {
                 wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
-                string fileName = Uri.EscapeUriString(item.broadcaster.display_name + "_" + item.slug);
+                string fileName = Uri.EscapeUriString( (item.pre != "" ? (item.pre+"_") : "") + item.slug);
                 wc.DownloadFileAsync(new System.Uri(@downloadUri), Properties.Settings.Default.savePath.Replace("\\", "\\\\") + fileName + ".mp4");
 
                 form.updateLog("---- " + downloadUri + " ----");

@@ -35,7 +35,6 @@
             this.ckTrend = new System.Windows.Forms.CheckBox();
             this.cbPeriod = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.rtLog = new System.Windows.Forms.RichTextBox();
             this.txtSave = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btSave = new System.Windows.Forms.Button();
@@ -51,16 +50,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbLimit = new System.Windows.Forms.ComboBox();
             this.tDownloader = new System.Windows.Forms.TabPage();
+            this.btStartDownloadQue = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.chkUbs = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.chkAddToQue = new System.Windows.Forms.CheckBox();
+            this.txtSlug = new System.Windows.Forms.TextBox();
+            this.txtPre = new System.Windows.Forms.TextBox();
             this.btDownloadByLink = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.txtLink = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btDownloadBySlug = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtSlug = new System.Windows.Forms.TextBox();
             this.tSettings = new System.Windows.Forms.TabPage();
-            this.tLog = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.rtLog = new System.Windows.Forms.RichTextBox();
             this.tAbout = new System.Windows.Forms.TabPage();
             this.lbVersion = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -70,14 +73,13 @@
             this.pbDownload = new System.Windows.Forms.ToolStripProgressBar();
             this.toolTipText = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtVersion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbQue = new System.Windows.Forms.ListBox();
             this.tabControl.SuspendLayout();
             this.tCrawler.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tDownloader.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.tSettings.SuspendLayout();
-            this.tLog.SuspendLayout();
             this.tAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -147,17 +149,6 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Period:";
             // 
-            // rtLog
-            // 
-            this.rtLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtLog.Location = new System.Drawing.Point(0, 0);
-            this.rtLog.Name = "rtLog";
-            this.rtLog.ReadOnly = true;
-            this.rtLog.Size = new System.Drawing.Size(583, 273);
-            this.rtLog.TabIndex = 6;
-            this.rtLog.Text = "";
-            // 
             // txtSave
             // 
             this.txtSave.Location = new System.Drawing.Point(8, 30);
@@ -170,9 +161,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(8, 14);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 13);
+            this.label5.Size = new System.Drawing.Size(60, 13);
             this.label5.TabIndex = 11;
-            this.label5.Text = "SavePath";
+            this.label5.Text = "Save Path:";
             // 
             // btSave
             // 
@@ -206,7 +197,6 @@
             this.tabControl.Controls.Add(this.tCrawler);
             this.tabControl.Controls.Add(this.tDownloader);
             this.tabControl.Controls.Add(this.tSettings);
-            this.tabControl.Controls.Add(this.tLog);
             this.tabControl.Controls.Add(this.tAbout);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
@@ -362,8 +352,9 @@
             // 
             // tDownloader
             // 
+            this.tDownloader.Controls.Add(this.lbQue);
+            this.tDownloader.Controls.Add(this.btStartDownloadQue);
             this.tDownloader.Controls.Add(this.groupBox3);
-            this.tDownloader.Controls.Add(this.groupBox2);
             this.tDownloader.Location = new System.Drawing.Point(4, 22);
             this.tDownloader.Name = "tDownloader";
             this.tDownloader.Padding = new System.Windows.Forms.Padding(3);
@@ -372,21 +363,91 @@
             this.tDownloader.Text = "Downloader";
             this.tDownloader.UseVisualStyleBackColor = true;
             // 
+            // btStartDownloadQue
+            // 
+            this.btStartDownloadQue.Location = new System.Drawing.Point(477, 93);
+            this.btStartDownloadQue.Name = "btStartDownloadQue";
+            this.btStartDownloadQue.Size = new System.Drawing.Size(98, 23);
+            this.btStartDownloadQue.TabIndex = 5;
+            this.btStartDownloadQue.Text = "Download Que";
+            this.btStartDownloadQue.UseVisualStyleBackColor = true;
+            this.btStartDownloadQue.Click += new System.EventHandler(this.btStartDownloadQue_Click_1);
+            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chkUbs);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.chkAddToQue);
+            this.groupBox3.Controls.Add(this.txtSlug);
+            this.groupBox3.Controls.Add(this.txtPre);
             this.groupBox3.Controls.Add(this.btDownloadByLink);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.txtLink);
-            this.groupBox3.Location = new System.Drawing.Point(6, 68);
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(571, 56);
+            this.groupBox3.Size = new System.Drawing.Size(571, 81);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "By Link";
             // 
+            // chkUbs
+            // 
+            this.chkUbs.AutoSize = true;
+            this.chkUbs.Location = new System.Drawing.Point(252, 51);
+            this.chkUbs.Name = "chkUbs";
+            this.chkUbs.Size = new System.Drawing.Size(148, 17);
+            this.chkUbs.TabIndex = 5;
+            this.chkUbs.Text = "Use Broadcaster as Prefix";
+            this.chkUbs.UseVisualStyleBackColor = true;
+            this.chkUbs.CheckedChanged += new System.EventHandler(this.chkUseBroadcasterAsPre_CheckedChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(308, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(31, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Slug:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 52);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(36, 13);
+            this.label13.TabIndex = 4;
+            this.label13.Text = "Prefix:";
+            // 
+            // chkAddToQue
+            // 
+            this.chkAddToQue.AutoSize = true;
+            this.chkAddToQue.Location = new System.Drawing.Point(404, 51);
+            this.chkAddToQue.Name = "chkAddToQue";
+            this.chkAddToQue.Size = new System.Drawing.Size(80, 17);
+            this.chkAddToQue.TabIndex = 2;
+            this.chkAddToQue.Text = "Add to Que";
+            this.chkAddToQue.UseVisualStyleBackColor = true;
+            this.chkAddToQue.CheckedChanged += new System.EventHandler(this.chkAddToQue_CheckedChanged);
+            // 
+            // txtSlug
+            // 
+            this.txtSlug.Location = new System.Drawing.Point(345, 23);
+            this.txtSlug.Name = "txtSlug";
+            this.txtSlug.Size = new System.Drawing.Size(220, 20);
+            this.txtSlug.TabIndex = 0;
+            // 
+            // txtPre
+            // 
+            this.txtPre.Location = new System.Drawing.Point(43, 49);
+            this.txtPre.Name = "txtPre";
+            this.txtPre.Size = new System.Drawing.Size(203, 20);
+            this.txtPre.TabIndex = 3;
+            // 
             // btDownloadByLink
             // 
-            this.btDownloadByLink.Location = new System.Drawing.Point(490, 21);
+            this.btDownloadByLink.Location = new System.Drawing.Point(490, 49);
             this.btDownloadByLink.Name = "btDownloadByLink";
             this.btDownloadByLink.Size = new System.Drawing.Size(75, 23);
             this.btDownloadByLink.TabIndex = 2;
@@ -407,49 +468,13 @@
             // 
             this.txtLink.Location = new System.Drawing.Point(43, 23);
             this.txtLink.Name = "txtLink";
-            this.txtLink.Size = new System.Drawing.Size(441, 20);
+            this.txtLink.Size = new System.Drawing.Size(253, 20);
             this.txtLink.TabIndex = 0;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btDownloadBySlug);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.txtSlug);
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(571, 56);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "By Slug";
-            // 
-            // btDownloadBySlug
-            // 
-            this.btDownloadBySlug.Location = new System.Drawing.Point(490, 21);
-            this.btDownloadBySlug.Name = "btDownloadBySlug";
-            this.btDownloadBySlug.Size = new System.Drawing.Size(75, 23);
-            this.btDownloadBySlug.TabIndex = 2;
-            this.btDownloadBySlug.Text = "Download";
-            this.btDownloadBySlug.UseVisualStyleBackColor = true;
-            this.btDownloadBySlug.Click += new System.EventHandler(this.btDownloadBySlug_Click);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 26);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(31, 13);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Slug:";
-            // 
-            // txtSlug
-            // 
-            this.txtSlug.Location = new System.Drawing.Point(43, 23);
-            this.txtSlug.Name = "txtSlug";
-            this.txtSlug.Size = new System.Drawing.Size(441, 20);
-            this.txtSlug.TabIndex = 0;
             // 
             // tSettings
             // 
+            this.tSettings.Controls.Add(this.label12);
+            this.tSettings.Controls.Add(this.rtLog);
             this.tSettings.Controls.Add(this.txtSave);
             this.tSettings.Controls.Add(this.label5);
             this.tSettings.Controls.Add(this.btSave);
@@ -460,15 +485,24 @@
             this.tSettings.Text = "Settings";
             this.tSettings.UseVisualStyleBackColor = true;
             // 
-            // tLog
+            // label12
             // 
-            this.tLog.Controls.Add(this.rtLog);
-            this.tLog.Location = new System.Drawing.Point(4, 22);
-            this.tLog.Name = "tLog";
-            this.tLog.Size = new System.Drawing.Size(583, 273);
-            this.tLog.TabIndex = 4;
-            this.tLog.Text = "Log";
-            this.tLog.UseVisualStyleBackColor = true;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(8, 68);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(28, 13);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "Log:";
+            // 
+            // rtLog
+            // 
+            this.rtLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtLog.Location = new System.Drawing.Point(8, 84);
+            this.rtLog.Name = "rtLog";
+            this.rtLog.ReadOnly = true;
+            this.rtLog.Size = new System.Drawing.Size(567, 157);
+            this.rtLog.TabIndex = 13;
+            this.rtLog.Text = "";
             // 
             // tAbout
             // 
@@ -558,6 +592,14 @@
             this.txtVersion.Text = "VERSION";
             this.txtVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // lbQue
+            // 
+            this.lbQue.FormattingEnabled = true;
+            this.lbQue.Location = new System.Drawing.Point(8, 130);
+            this.lbQue.Name = "lbQue";
+            this.lbQue.Size = new System.Drawing.Size(563, 134);
+            this.lbQue.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -571,6 +613,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TCD - Twitch Clip Downloader";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.tabControl.ResumeLayout(false);
             this.tCrawler.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
@@ -578,11 +621,8 @@
             this.tDownloader.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.tSettings.ResumeLayout(false);
             this.tSettings.PerformLayout();
-            this.tLog.ResumeLayout(false);
             this.tAbout.ResumeLayout(false);
             this.tAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -601,7 +641,6 @@
         private System.Windows.Forms.CheckBox ckTrend;
         private System.Windows.Forms.ComboBox cbPeriod;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RichTextBox rtLog;
         private System.Windows.Forms.TextBox txtSave;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btSave;
@@ -611,12 +650,9 @@
         private System.Windows.Forms.TabPage tCrawler;
         private System.Windows.Forms.TabPage tDownloader;
         private System.Windows.Forms.TabPage tSettings;
-        private System.Windows.Forms.TabPage tLog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbLimit;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btDownloadBySlug;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtSlug;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -636,6 +672,14 @@
         private System.Windows.Forms.DomainUpDown sTime;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStripStatusLabel txtVersion;
+        private System.Windows.Forms.CheckBox chkAddToQue;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.RichTextBox rtLog;
+        private System.Windows.Forms.CheckBox chkUbs;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtPre;
+        private System.Windows.Forms.Button btStartDownloadQue;
+        private System.Windows.Forms.ListBox lbQue;
     }
 }
 

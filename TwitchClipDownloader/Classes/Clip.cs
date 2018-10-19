@@ -13,5 +13,10 @@ namespace TwitchClipDownloader.Classes
         public string title { get; set; }
         public Thumbnails thumbnails { get; set; }
         public DateTime created_at { get; set; }
+
+
+
+        //custom
+        public string pre { get; set; }
     }
 }

@@ -35,15 +35,36 @@ namespace TwitchClipDownloader.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("h91ejo3shtecvixy0xhcd6mulvitd8")]
         public string twitchClientId {
             get {
                 return ((string)(this["twitchClientId"]));
             }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool addToQue {
+            get {
+                return ((bool)(this["addToQue"]));
+            }
             set {
-                this["twitchClientId"] = value;
+                this["addToQue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool brd {
+            get {
+                return ((bool)(this["brd"]));
+            }
+            set {
+                this["brd"] = value;
             }
         }
     }
