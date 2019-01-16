@@ -117,41 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBox1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAjBJREFUeF7t2T1r1XAUx/HrAwoqFRQd66CDVunoJji4iSIdCvoGipODm+gg2I4q
-        dnDo3MkXoKiTgqCLugnt0C61PiAqiDj48P1B/3AIJ429bf9Jbs4XPktJSM6BNrm3vSiKoiiKoiiK+mkn
-        9jfEPmxD1mbxuSE+4SiyNYxf+NsgJ5Ctq/Buok7HkaWteA178R+4hesZPYC9h2wLOAl7YVnGFuTsAuw9
-        ZFvANOyF5SP2ImeXYO8hywI05BLshaUzCzgGe9GkMwvQs/YP7IUlFoBYAKo6gzsrJrEHxbZDj7l03Bi8
-        WrmAm0jn/MZBFNNnDL3epuNm4NXKBVxDOucrDqCYFrCAdJweu16xAKRjJBaATS8WgFgA7IUlFoBYAKq6
-        gXTOT5S9B9gPXPfh1coFTODdilfQl5nFduAp0nF6K/Rq5QL0bZJedZOy9A1vOkbneI3D3kMrFrCRXYG9
-        h04t4Cy+w97DKDa9JixAw+sPqL3+HLwnyoZX9wK84edxBFmqcwFlwx9GtsoW8AGr/VVfb40YXpUt4Bsu
-        4nyJUyi2G+fgHW9dhvc7n314VbaAKm9g01dhT+AdW6W24VW/C3iJVGuHV+tdQKuHV/0u4Bl24bH52Vo0
-        Yng1Au8Gq7zFw8LP/ldjhleH8BwvKryHN0yR/q3unZ88QmOGX0u34Q1s6dF5GgPZXXhDJwM9vFptAQM/
-        vLqHzg6vpvClYBGdGF7phUefz60hRFEURVEURVFUd73ePyMXloxLSnitAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>This program was written to make downloading clips, provided by twitch, easier.
-
-Version: 
-
-Filter Options:
-- Channel or Game
-- Language
-- Trending (popularity) or Not (viewcount)
-- Period (day, week, month, all) able to restrict by hours (1-48 hours)
-- Limit count of clips
-
-Features: 
-- Crawling Top Seen/Trending Clips filtered
-- Downloading by Slug / Link</value>
-  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAEBAAAAEAIABoBAAAZgAAAAAAAAABACAA2AYAAM4EAAAwMAAAAQAgAKglAACmCwAAICAAAAEA
