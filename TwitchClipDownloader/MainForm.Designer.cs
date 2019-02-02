@@ -69,10 +69,17 @@
             this.txtVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btClose = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btLfSavePath = new System.Windows.Forms.Button();
+            this.fdb_SavePath = new System.Windows.Forms.FolderBrowserDialog();
+            this.chk_useGame = new System.Windows.Forms.CheckBox();
+            this.chk_useChannel = new System.Windows.Forms.CheckBox();
+            this.btLookUpTopOnly = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbGame
@@ -144,7 +151,7 @@
             // 
             this.txtSave.Location = new System.Drawing.Point(9, 41);
             this.txtSave.Name = "txtSave";
-            this.txtSave.Size = new System.Drawing.Size(245, 20);
+            this.txtSave.Size = new System.Drawing.Size(205, 20);
             this.txtSave.TabIndex = 10;
             // 
             // label5
@@ -186,6 +193,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btLookUpTopOnly);
+            this.groupBox1.Controls.Add(this.chk_useChannel);
+            this.groupBox1.Controls.Add(this.chk_useGame);
             this.groupBox1.Controls.Add(this.sTime);
             this.groupBox1.Controls.Add(this.bLookupTop);
             this.groupBox1.Controls.Add(this.label11);
@@ -351,6 +361,7 @@
             this.groupBox3.Controls.Add(this.btDownloadByLink);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.txtLink);
+            this.groupBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox3.Location = new System.Drawing.Point(322, 36);
             this.groupBox3.Name = "groupBox3";
@@ -427,6 +438,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
+            this.label8.Cursor = System.Windows.Forms.Cursors.Default;
             this.label8.Location = new System.Drawing.Point(7, 20);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(30, 13);
@@ -452,7 +464,7 @@
             // 
             // rtLog
             // 
-            this.rtLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.rtLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.rtLog.Location = new System.Drawing.Point(12, 346);
             this.rtLog.Name = "rtLog";
@@ -519,6 +531,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btLfSavePath);
             this.groupBox2.Controls.Add(this.lbVersion);
             this.groupBox2.Controls.Add(this.btSave);
             this.groupBox2.Controls.Add(this.label4);
@@ -535,13 +548,66 @@
             // btClose
             // 
             this.btClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btClose.Location = new System.Drawing.Point(856, 7);
+            this.btClose.Location = new System.Drawing.Point(862, 4);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(22, 23);
             this.btClose.TabIndex = 17;
             this.btClose.Text = "X";
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.LightGray;
+            this.panel1.Controls.Add(this.btClose);
+            this.panel1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.panel1.Location = new System.Drawing.Point(0, -1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(890, 31);
+            this.panel1.TabIndex = 18;
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            // 
+            // btLfSavePath
+            // 
+            this.btLfSavePath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btLfSavePath.Location = new System.Drawing.Point(220, 40);
+            this.btLfSavePath.Name = "btLfSavePath";
+            this.btLfSavePath.Size = new System.Drawing.Size(37, 23);
+            this.btLfSavePath.TabIndex = 13;
+            this.btLfSavePath.Text = "...";
+            this.btLfSavePath.UseVisualStyleBackColor = true;
+            this.btLfSavePath.Click += new System.EventHandler(this.btLfSavePath_Click);
+            // 
+            // chk_useGame
+            // 
+            this.chk_useGame.AutoSize = true;
+            this.chk_useGame.Location = new System.Drawing.Point(96, 199);
+            this.chk_useGame.Name = "chk_useGame";
+            this.chk_useGame.Size = new System.Drawing.Size(76, 17);
+            this.chk_useGame.TabIndex = 22;
+            this.chk_useGame.Text = "Use Game";
+            this.chk_useGame.UseVisualStyleBackColor = true;
+            // 
+            // chk_useChannel
+            // 
+            this.chk_useChannel.AutoSize = true;
+            this.chk_useChannel.Location = new System.Drawing.Point(96, 222);
+            this.chk_useChannel.Name = "chk_useChannel";
+            this.chk_useChannel.Size = new System.Drawing.Size(113, 17);
+            this.chk_useChannel.TabIndex = 23;
+            this.chk_useChannel.Text = "Use Channelname";
+            this.chk_useChannel.UseVisualStyleBackColor = true;
+            // 
+            // btLookUpTopOnly
+            // 
+            this.btLookUpTopOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btLookUpTopOnly.Location = new System.Drawing.Point(6, 262);
+            this.btLookUpTopOnly.Name = "btLookUpTopOnly";
+            this.btLookUpTopOnly.Size = new System.Drawing.Size(114, 23);
+            this.btLookUpTopOnly.TabIndex = 24;
+            this.btLookUpTopOnly.Text = "Crawl top only";
+            this.btLookUpTopOnly.UseVisualStyleBackColor = true;
+            this.btLookUpTopOnly.Click += new System.EventHandler(this.btLookUpTopOnly_Click);
             // 
             // MainForm
             // 
@@ -550,7 +616,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(890, 536);
-            this.Controls.Add(this.btClose);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label12);
@@ -562,6 +628,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TCD - Twitch Clip Downloader";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing_1);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -571,6 +638,7 @@
             this.statusStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -618,6 +686,12 @@
         private System.Windows.Forms.ListBox lbQue;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btClose;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btLfSavePath;
+        private System.Windows.Forms.FolderBrowserDialog fdb_SavePath;
+        private System.Windows.Forms.CheckBox chk_useChannel;
+        private System.Windows.Forms.CheckBox chk_useGame;
+        private System.Windows.Forms.Button btLookUpTopOnly;
     }
 }
 

@@ -36,6 +36,8 @@ namespace TwitchClipDownloader
             txtVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             chkAddToQue.Checked = Properties.Settings.Default.addToQue;
             chkUbs.Checked = Properties.Settings.Default.brd;
+            chk_useChannel.Checked = Properties.Settings.Default.cusec;
+            chk_useGame.Checked = Properties.Settings.Default.cuseg;
         }
 
         private void saveLocals()
@@ -43,106 +45,15 @@ namespace TwitchClipDownloader
             Properties.Settings.Default.savePath = txtSave.Text;
             Properties.Settings.Default.addToQue = chkAddToQue.Checked;
             Properties.Settings.Default.brd = chkUbs.Checked;
+            Properties.Settings.Default.cusec = chk_useChannel.Checked;
+            Properties.Settings.Default.cuseg = chk_useGame.Checked;
             Properties.Settings.Default.Save();
         }
 
  
         private async void bLookupTop_Click(object sender, EventArgs e)
         {
-            string baseUrl = "https://api.twitch.tv/kraken/clips/top?limit=100";
-
-            //wird nur gecrawled wenn spiel angegeben
-            if (cbGame.Text != "" || txtChannel.Text != "")
-            {
-                baseUrl += "&game=" + cbGame.Text;
-
-                //periode setzen (week ist default)
-                if (cbPeriod.Text != "")
-                {
-                    baseUrl += "&period=" + cbPeriod.Text;
-                }
-
-                //channel speziefisch
-                if (txtChannel.Text != "")
-                {
-                    baseUrl += "&channel=" + txtChannel.Text;
-                }
-
-                //trending ist default auf false
-                if (ckTrend.Checked)
-                {
-                    baseUrl += "&trending=true";
-                }
-
-                //trending ist default auf false
-                if (txtLanguage.Text != "")
-                {
-                    baseUrl += "&language=" + txtLanguage.Text;
-                }
-
-                //trending ist default auf false
-                if (cbLimit.Text != "")
-                {
-                    baseUrl += "&limit=" + cbLimit.Text;
-                }
-
-                baseUrl = Uri.EscapeUriString(baseUrl);
-
-                updateLog("REQUEST TO: " + baseUrl);
-                string testString = await mHandler.sendNewRequest(baseUrl);
-
-                ClipsObject result = (ClipsObject)JsonConvert.DeserializeObject(testString,typeof(ClipsObject));
-                if (result.clips == null)
-                {
-                    updateLog("Nothing found.");
-                    return;
-                }
-
-                bLookupTop.Enabled = false;
-
-                //each clip -> log it
-                foreach (Clip item in result.clips)
-                {
-                    
-                    bool isValidForDownload = false;
-                    
-                    if (sTime.Text != "")
-                    {
-                        if (DateTime.Now < item.created_at.AddHours(Int32.Parse(sTime.Text)))
-                        {
-                            isValidForDownload = true;
-                        }
-
-                    }else
-                    {
-                        isValidForDownload = true;
-                        
-                    }
-
-                    if (isValidForDownload)
-                    {
-                        downloadCounter++;
-                        mHandler.downloadClip(item);
-                    }
-                        
-                }
-
-                if (downloadCounter == 0)
-                {
-                    bLookupTop.Enabled = true;
-                    updateLog("---- Could not find any clips ----");
-                }
-                else
-                {
-                    updateLog("---- Starting " + downloadCounter + " Downloads ----");
-                    pbDownload.Maximum = downloadCounter;
-                }
-                
-            }
-            else
-            {
-                updateLog("Kein Spiel oder Channel angegeben");
-            }
+            await crawler(false);
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -167,9 +78,11 @@ namespace TwitchClipDownloader
             string testString = await mHandler.sendNewRequest(clipUri);
 
             Clip result = (Clip)JsonConvert.DeserializeObject(testString, typeof(Clip));
-            if (result == null)
+            if (result.slug == null)
             {
                 updateLog("Nothing found.");
+                txtLink.Text = "";
+                txtSlug.Text = "";
                 return;
             }
 
@@ -210,6 +123,8 @@ namespace TwitchClipDownloader
                     pbDownload.Maximum++;
                 }
                 mHandler.downloadClip(result);
+                txtLink.Text = "";
+                txtSlug.Text = "";
             }
             
         }
@@ -335,6 +250,147 @@ namespace TwitchClipDownloader
 
 
         #endregion
-    }
 
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void btLfSavePath_Click(object sender, EventArgs e)
+        {
+            fdb_SavePath.SelectedPath = txtSave.Text;
+            DialogResult ds = fdb_SavePath.ShowDialog();
+            if (ds == DialogResult.OK)
+            {
+                txtSave.Text = fdb_SavePath.SelectedPath + "\\";
+                saveLocals();
+            }
+            
+        }
+
+        private async void btLookUpTopOnly_Click(object sender, EventArgs e)
+        {
+            await crawler(true);
+        }
+
+        private async Task crawler(bool topOnly)
+        {
+            string baseUrl = "https://api.twitch.tv/kraken/clips/top?limit=100";
+
+            //wird nur gecrawled wenn spiel angegeben
+            if (
+                (cbGame.Text != "" && chk_useGame.Checked == true) ||
+                (txtChannel.Text != "" && chk_useChannel.Checked == true) ||
+                topOnly
+                )
+            {
+                //channel speziefisch
+                if (cbGame.Text != "" && chk_useGame.Checked == true && !topOnly)
+                {
+                    baseUrl += "&game=" + cbGame.Text;
+                }
+
+                //periode setzen (week ist default)
+                if (cbPeriod.Text != "")
+                {
+                    baseUrl += "&period=" + cbPeriod.Text;
+                }
+
+                //channel speziefisch
+                if (txtChannel.Text != "" && chk_useChannel.Checked == true && !topOnly)
+                {
+                    baseUrl += "&channel=" + txtChannel.Text;
+                }
+
+                //trending ist default auf false
+                if (ckTrend.Checked)
+                {
+                    baseUrl += "&trending=true";
+                }
+
+                //trending ist default auf false
+                if (txtLanguage.Text != "")
+                {
+                    baseUrl += "&language=" + txtLanguage.Text;
+                }
+
+                //trending ist default auf false
+                if (cbLimit.Text != "")
+                {
+                    baseUrl += "&limit=" + cbLimit.Text;
+                }
+
+                baseUrl = Uri.EscapeUriString(baseUrl);
+
+                updateLog("REQUEST TO: " + baseUrl);
+                string testString = await mHandler.sendNewRequest(baseUrl);
+
+                ClipsObject result = (ClipsObject)JsonConvert.DeserializeObject(testString, typeof(ClipsObject));
+                if (result.clips == null)
+                {
+                    updateLog("Nothing found.");
+                    return;
+                }
+
+                bLookupTop.Enabled = false;
+
+                //each clip -> log it
+                foreach (Clip item in result.clips)
+                {
+
+                    bool isValidForDownload = false;
+
+                    if (sTime.Text != "")
+                    {
+                        if (DateTime.Now < item.created_at.AddHours(Int32.Parse(sTime.Text)))
+                        {
+                            isValidForDownload = true;
+                        }
+
+                    }
+                    else
+                    {
+                        isValidForDownload = true;
+
+                    }
+
+                    if (isValidForDownload)
+                    {
+                        downloadCounter++;
+                        mHandler.downloadClip(item);
+                    }
+
+                }
+
+                if (downloadCounter == 0)
+                {
+                    bLookupTop.Enabled = true;
+                    updateLog("---- Could not find any clips ----");
+                }
+                else
+                {
+                    updateLog("---- Starting " + downloadCounter + " Downloads ----");
+                    pbDownload.Maximum = downloadCounter;
+                }
+
+            }
+            else if (chk_useGame.Checked == false && chk_useChannel.Checked == false)
+            {
+                updateLog("At least one of the checkboxes of usage must be checked.");
+            }
+            else
+            {
+                updateLog("There must be at least a game or channel name given.");
+            }
+        }
+
+        private void MainForm_FormClosing_1(object sender, FormClosingEventArgs e)
+        {
+            saveLocals();
+        }
+    }
 }
