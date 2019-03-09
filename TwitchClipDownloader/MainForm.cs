@@ -14,6 +14,7 @@ using System.IO;
 using TwitchClipDownloader.Classes;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using VC;
 
 namespace TwitchClipDownloader
 {
@@ -22,6 +23,8 @@ namespace TwitchClipDownloader
         public int downloadCounter = 0;
         private TwitchApiHandler mHandler = null;
         private SortedDictionary<string, Clip> que = new SortedDictionary<string, Clip>();
+        VersionControl mvc = new VersionControl();
+
         public MainForm()
         {
 
@@ -38,6 +41,7 @@ namespace TwitchClipDownloader
             chkUbs.Checked = Properties.Settings.Default.brd;
             chk_useChannel.Checked = Properties.Settings.Default.cusec;
             chk_useGame.Checked = Properties.Settings.Default.cuseg;
+            checkVersionAsync();
         }
 
         private void saveLocals()
@@ -48,6 +52,18 @@ namespace TwitchClipDownloader
             Properties.Settings.Default.cusec = chk_useChannel.Checked;
             Properties.Settings.Default.cuseg = chk_useGame.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private async void checkVersionAsync()
+        {
+            if (await mvc.checkServerJsonAsync())
+            {
+                lbNewVersion.Text = "New Version Available";
+            }
+            else
+            {
+                lbNewVersion.Text = "";
+            }
         }
 
  
@@ -391,6 +407,11 @@ namespace TwitchClipDownloader
         private void MainForm_FormClosing_1(object sender, FormClosingEventArgs e)
         {
             saveLocals();
+        }
+
+        private void versionTimer_TickAsync(object sender, EventArgs e)
+        {
+            checkVersionAsync();
         }
     }
 }

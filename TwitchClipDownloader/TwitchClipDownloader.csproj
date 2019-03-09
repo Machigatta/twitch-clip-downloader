@@ -74,6 +74,7 @@
     <Compile Include="Classes\ClipsObject.cs" />
     <Compile Include="Classes\Thumbnails.cs" />
     <Compile Include="Classes\TwitchApiHandler.cs" />
+    <Compile Include="Classes\VersionControl.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

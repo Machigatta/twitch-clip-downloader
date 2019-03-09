@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.cbGame = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -41,6 +42,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtLanguage = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btLookUpTopOnly = new System.Windows.Forms.Button();
+            this.chk_useChannel = new System.Windows.Forms.CheckBox();
+            this.chk_useGame = new System.Windows.Forms.CheckBox();
             this.sTime = new System.Windows.Forms.DomainUpDown();
             this.label11 = new System.Windows.Forms.Label();
             this.txtChannel = new System.Windows.Forms.TextBox();
@@ -66,15 +70,15 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pbDownload = new System.Windows.Forms.ToolStripProgressBar();
             this.toolTipText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbNewVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btLfSavePath = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btLfSavePath = new System.Windows.Forms.Button();
             this.fdb_SavePath = new System.Windows.Forms.FolderBrowserDialog();
-            this.chk_useGame = new System.Windows.Forms.CheckBox();
-            this.chk_useChannel = new System.Windows.Forms.CheckBox();
-            this.btLookUpTopOnly = new System.Windows.Forms.Button();
+            this.versionTimer = new System.Windows.Forms.Timer(this.components);
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -217,6 +221,37 @@
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Crawler";
+            // 
+            // btLookUpTopOnly
+            // 
+            this.btLookUpTopOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btLookUpTopOnly.Location = new System.Drawing.Point(6, 262);
+            this.btLookUpTopOnly.Name = "btLookUpTopOnly";
+            this.btLookUpTopOnly.Size = new System.Drawing.Size(114, 23);
+            this.btLookUpTopOnly.TabIndex = 24;
+            this.btLookUpTopOnly.Text = "Crawl top only";
+            this.btLookUpTopOnly.UseVisualStyleBackColor = true;
+            this.btLookUpTopOnly.Click += new System.EventHandler(this.btLookUpTopOnly_Click);
+            // 
+            // chk_useChannel
+            // 
+            this.chk_useChannel.AutoSize = true;
+            this.chk_useChannel.Location = new System.Drawing.Point(96, 222);
+            this.chk_useChannel.Name = "chk_useChannel";
+            this.chk_useChannel.Size = new System.Drawing.Size(113, 17);
+            this.chk_useChannel.TabIndex = 23;
+            this.chk_useChannel.Text = "Use Channelname";
+            this.chk_useChannel.UseVisualStyleBackColor = true;
+            // 
+            // chk_useGame
+            // 
+            this.chk_useGame.AutoSize = true;
+            this.chk_useGame.Location = new System.Drawing.Point(96, 199);
+            this.chk_useGame.Name = "chk_useGame";
+            this.chk_useGame.Size = new System.Drawing.Size(76, 17);
+            this.chk_useGame.TabIndex = 22;
+            this.chk_useGame.Text = "Use Game";
+            this.chk_useGame.UseVisualStyleBackColor = true;
             // 
             // sTime
             // 
@@ -501,6 +536,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pbDownload,
             this.toolTipText,
+            this.lbNewVersion,
             this.txtVersion});
             this.statusStrip1.Location = new System.Drawing.Point(0, 514);
             this.statusStrip1.Name = "statusStrip1";
@@ -520,11 +556,21 @@
             this.toolTipText.Name = "toolTipText";
             this.toolTipText.Size = new System.Drawing.Size(0, 17);
             // 
+            // lbNewVersion
+            // 
+            this.lbNewVersion.ForeColor = System.Drawing.Color.DarkRed;
+            this.lbNewVersion.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.lbNewVersion.Name = "lbNewVersion";
+            this.lbNewVersion.Size = new System.Drawing.Size(336, 17);
+            this.lbNewVersion.Spring = true;
+            this.lbNewVersion.Text = "VERSION";
+            this.lbNewVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // txtVersion
             // 
             this.txtVersion.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.txtVersion.Name = "txtVersion";
-            this.txtVersion.Size = new System.Drawing.Size(673, 17);
+            this.txtVersion.Size = new System.Drawing.Size(336, 17);
             this.txtVersion.Spring = true;
             this.txtVersion.Text = "VERSION";
             this.txtVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -545,6 +591,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings";
             // 
+            // btLfSavePath
+            // 
+            this.btLfSavePath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btLfSavePath.Location = new System.Drawing.Point(220, 40);
+            this.btLfSavePath.Name = "btLfSavePath";
+            this.btLfSavePath.Size = new System.Drawing.Size(37, 23);
+            this.btLfSavePath.TabIndex = 13;
+            this.btLfSavePath.Text = "...";
+            this.btLfSavePath.UseVisualStyleBackColor = true;
+            this.btLfSavePath.Click += new System.EventHandler(this.btLfSavePath_Click);
+            // 
             // btClose
             // 
             this.btClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -559,6 +616,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.LightGray;
+            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.btClose);
             this.panel1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.panel1.Location = new System.Drawing.Point(0, -1);
@@ -567,47 +625,23 @@
             this.panel1.TabIndex = 18;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             // 
-            // btLfSavePath
+            // versionTimer
             // 
-            this.btLfSavePath.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btLfSavePath.Location = new System.Drawing.Point(220, 40);
-            this.btLfSavePath.Name = "btLfSavePath";
-            this.btLfSavePath.Size = new System.Drawing.Size(37, 23);
-            this.btLfSavePath.TabIndex = 13;
-            this.btLfSavePath.Text = "...";
-            this.btLfSavePath.UseVisualStyleBackColor = true;
-            this.btLfSavePath.Click += new System.EventHandler(this.btLfSavePath_Click);
+            this.versionTimer.Enabled = true;
+            this.versionTimer.Interval = 30000;
+            this.versionTimer.Tick += new System.EventHandler(this.versionTimer_TickAsync);
             // 
-            // chk_useGame
+            // label9
             // 
-            this.chk_useGame.AutoSize = true;
-            this.chk_useGame.Location = new System.Drawing.Point(96, 199);
-            this.chk_useGame.Name = "chk_useGame";
-            this.chk_useGame.Size = new System.Drawing.Size(76, 17);
-            this.chk_useGame.TabIndex = 22;
-            this.chk_useGame.Text = "Use Game";
-            this.chk_useGame.UseVisualStyleBackColor = true;
-            // 
-            // chk_useChannel
-            // 
-            this.chk_useChannel.AutoSize = true;
-            this.chk_useChannel.Location = new System.Drawing.Point(96, 222);
-            this.chk_useChannel.Name = "chk_useChannel";
-            this.chk_useChannel.Size = new System.Drawing.Size(113, 17);
-            this.chk_useChannel.TabIndex = 23;
-            this.chk_useChannel.Text = "Use Channelname";
-            this.chk_useChannel.UseVisualStyleBackColor = true;
-            // 
-            // btLookUpTopOnly
-            // 
-            this.btLookUpTopOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btLookUpTopOnly.Location = new System.Drawing.Point(6, 262);
-            this.btLookUpTopOnly.Name = "btLookUpTopOnly";
-            this.btLookUpTopOnly.Size = new System.Drawing.Size(114, 23);
-            this.btLookUpTopOnly.TabIndex = 24;
-            this.btLookUpTopOnly.Text = "Crawl top only";
-            this.btLookUpTopOnly.UseVisualStyleBackColor = true;
-            this.btLookUpTopOnly.Click += new System.EventHandler(this.btLookUpTopOnly_Click);
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Font = new System.Drawing.Font("Leelawadee UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label9.Location = new System.Drawing.Point(6, 5);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(168, 20);
+            this.label9.TabIndex = 18;
+            this.label9.Text = "Twitch Clip Downloader";
             // 
             // MainForm
             // 
@@ -639,6 +673,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -692,6 +727,9 @@
         private System.Windows.Forms.CheckBox chk_useChannel;
         private System.Windows.Forms.CheckBox chk_useGame;
         private System.Windows.Forms.Button btLookUpTopOnly;
+        private System.Windows.Forms.Timer versionTimer;
+        private System.Windows.Forms.ToolStripStatusLabel lbNewVersion;
+        private System.Windows.Forms.Label label9;
     }
 }
 
