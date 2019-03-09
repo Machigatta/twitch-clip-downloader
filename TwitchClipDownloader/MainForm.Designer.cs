@@ -79,11 +79,20 @@
             this.fdb_SavePath = new System.Windows.Forms.FolderBrowserDialog();
             this.versionTimer = new System.Windows.Forms.Timer(this.components);
             this.label9 = new System.Windows.Forms.Label();
+            this.dtFrom = new System.Windows.Forms.DateTimePicker();
+            this.label14 = new System.Windows.Forms.Label();
+            this.dtTo = new System.Windows.Forms.DateTimePicker();
+            this.label15 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbGame
@@ -100,7 +109,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 20);
+            this.label1.Location = new System.Drawing.Point(6, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 1;
@@ -109,7 +118,7 @@
             // bLookupTop
             // 
             this.bLookupTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bLookupTop.Location = new System.Drawing.Point(227, 262);
+            this.bLookupTop.Location = new System.Drawing.Point(227, 335);
             this.bLookupTop.Name = "bLookupTop";
             this.bLookupTop.Size = new System.Drawing.Size(75, 23);
             this.bLookupTop.TabIndex = 2;
@@ -122,7 +131,7 @@
             this.ckTrend.AutoSize = true;
             this.ckTrend.Checked = true;
             this.ckTrend.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckTrend.Location = new System.Drawing.Point(96, 176);
+            this.ckTrend.Location = new System.Drawing.Point(11, 19);
             this.ckTrend.Name = "ckTrend";
             this.ckTrend.Size = new System.Drawing.Size(68, 17);
             this.ckTrend.TabIndex = 3;
@@ -137,15 +146,15 @@
             "week",
             "month",
             "all"});
-            this.cbPeriod.Location = new System.Drawing.Point(96, 96);
+            this.cbPeriod.Location = new System.Drawing.Point(118, 13);
             this.cbPeriod.Name = "cbPeriod";
-            this.cbPeriod.Size = new System.Drawing.Size(195, 21);
+            this.cbPeriod.Size = new System.Drawing.Size(172, 21);
             this.cbPeriod.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 99);
+            this.label2.Location = new System.Drawing.Point(6, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 13);
             this.label2.TabIndex = 5;
@@ -170,7 +179,7 @@
             // btSave
             // 
             this.btSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSave.Location = new System.Drawing.Point(185, 262);
+            this.btSave.Location = new System.Drawing.Point(182, 335);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(75, 23);
             this.btSave.TabIndex = 12;
@@ -197,27 +206,20 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox5);
+            this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.btLookUpTopOnly);
-            this.groupBox1.Controls.Add(this.chk_useChannel);
-            this.groupBox1.Controls.Add(this.chk_useGame);
-            this.groupBox1.Controls.Add(this.sTime);
             this.groupBox1.Controls.Add(this.bLookupTop);
-            this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.txtChannel);
             this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.cbLimit);
-            this.groupBox1.Controls.Add(this.cbPeriod);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.txtLanguage);
-            this.groupBox1.Controls.Add(this.ckTrend);
             this.groupBox1.Controls.Add(this.cbGame);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox1.Location = new System.Drawing.Point(12, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(308, 291);
+            this.groupBox1.Size = new System.Drawing.Size(308, 364);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Crawler";
@@ -225,7 +227,7 @@
             // btLookUpTopOnly
             // 
             this.btLookUpTopOnly.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btLookUpTopOnly.Location = new System.Drawing.Point(6, 262);
+            this.btLookUpTopOnly.Location = new System.Drawing.Point(6, 335);
             this.btLookUpTopOnly.Name = "btLookUpTopOnly";
             this.btLookUpTopOnly.Size = new System.Drawing.Size(114, 23);
             this.btLookUpTopOnly.TabIndex = 24;
@@ -236,7 +238,7 @@
             // chk_useChannel
             // 
             this.chk_useChannel.AutoSize = true;
-            this.chk_useChannel.Location = new System.Drawing.Point(96, 222);
+            this.chk_useChannel.Location = new System.Drawing.Point(167, 19);
             this.chk_useChannel.Name = "chk_useChannel";
             this.chk_useChannel.Size = new System.Drawing.Size(113, 17);
             this.chk_useChannel.TabIndex = 23;
@@ -246,7 +248,7 @@
             // chk_useGame
             // 
             this.chk_useGame.AutoSize = true;
-            this.chk_useGame.Location = new System.Drawing.Point(96, 199);
+            this.chk_useGame.Location = new System.Drawing.Point(85, 19);
             this.chk_useGame.Name = "chk_useGame";
             this.chk_useGame.Size = new System.Drawing.Size(76, 17);
             this.chk_useGame.TabIndex = 22;
@@ -303,15 +305,15 @@
             this.sTime.Items.Add("3");
             this.sTime.Items.Add("2");
             this.sTime.Items.Add("1");
-            this.sTime.Location = new System.Drawing.Point(96, 123);
+            this.sTime.Location = new System.Drawing.Point(118, 40);
             this.sTime.Name = "sTime";
-            this.sTime.Size = new System.Drawing.Size(195, 20);
+            this.sTime.Size = new System.Drawing.Size(172, 20);
             this.sTime.TabIndex = 21;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 125);
+            this.label11.Location = new System.Drawing.Point(6, 42);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(75, 13);
             this.label11.TabIndex = 20;
@@ -336,7 +338,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 152);
+            this.label3.Location = new System.Drawing.Point(8, 69);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 16;
@@ -359,9 +361,9 @@
             "25",
             "50",
             "100"});
-            this.cbLimit.Location = new System.Drawing.Point(96, 149);
+            this.cbLimit.Location = new System.Drawing.Point(118, 66);
             this.cbLimit.Name = "cbLimit";
-            this.cbLimit.Size = new System.Drawing.Size(195, 21);
+            this.cbLimit.Size = new System.Drawing.Size(172, 21);
             this.cbLimit.TabIndex = 15;
             // 
             // lbQue
@@ -375,7 +377,7 @@
             // btStartDownloadQue
             // 
             this.btStartDownloadQue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btStartDownloadQue.Location = new System.Drawing.Point(183, 262);
+            this.btStartDownloadQue.Location = new System.Drawing.Point(189, 335);
             this.btStartDownloadQue.Name = "btStartDownloadQue";
             this.btStartDownloadQue.Size = new System.Drawing.Size(98, 23);
             this.btStartDownloadQue.TabIndex = 5;
@@ -400,7 +402,7 @@
             this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox3.Location = new System.Drawing.Point(322, 36);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(287, 291);
+            this.groupBox3.Size = new System.Drawing.Size(287, 364);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Direct Download ";
@@ -462,7 +464,7 @@
             // btDownloadByLink
             // 
             this.btDownloadByLink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btDownloadByLink.Location = new System.Drawing.Point(71, 262);
+            this.btDownloadByLink.Location = new System.Drawing.Point(77, 335);
             this.btDownloadByLink.Name = "btDownloadByLink";
             this.btDownloadByLink.Size = new System.Drawing.Size(106, 23);
             this.btDownloadByLink.TabIndex = 2;
@@ -491,7 +493,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.label12.Location = new System.Drawing.Point(12, 330);
+            this.label12.Location = new System.Drawing.Point(9, 403);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(28, 13);
             this.label12.TabIndex = 14;
@@ -501,10 +503,10 @@
             // 
             this.rtLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.rtLog.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.rtLog.Location = new System.Drawing.Point(12, 346);
+            this.rtLog.Location = new System.Drawing.Point(15, 419);
             this.rtLog.Name = "rtLog";
             this.rtLog.ReadOnly = true;
-            this.rtLog.Size = new System.Drawing.Size(863, 157);
+            this.rtLog.Size = new System.Drawing.Size(866, 157);
             this.rtLog.TabIndex = 13;
             this.rtLog.Text = "";
             // 
@@ -538,7 +540,7 @@
             this.toolTipText,
             this.lbNewVersion,
             this.txtVersion});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 514);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 579);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(890, 22);
             this.statusStrip1.SizingGrip = false;
@@ -586,7 +588,7 @@
             this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox2.Location = new System.Drawing.Point(615, 36);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(263, 291);
+            this.groupBox2.Size = new System.Drawing.Size(263, 364);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings";
@@ -643,13 +645,100 @@
             this.label9.TabIndex = 18;
             this.label9.Text = "Twitch Clip Downloader";
             // 
+            // dtFrom
+            // 
+            this.dtFrom.Checked = false;
+            this.dtFrom.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.dtFrom.CustomFormat = "DD.MM.YYYY";
+            this.dtFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtFrom.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.dtFrom.Location = new System.Drawing.Point(157, 131);
+            this.dtFrom.Name = "dtFrom";
+            this.dtFrom.ShowCheckBox = true;
+            this.dtFrom.Size = new System.Drawing.Size(132, 20);
+            this.dtFrom.TabIndex = 25;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 137);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(33, 13);
+            this.label14.TabIndex = 26;
+            this.label14.Text = "From:";
+            // 
+            // dtTo
+            // 
+            this.dtTo.Checked = false;
+            this.dtTo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.dtTo.CustomFormat = "DD.MM.YYYY";
+            this.dtTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtTo.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.dtTo.Location = new System.Drawing.Point(157, 156);
+            this.dtTo.Name = "dtTo";
+            this.dtTo.ShowCheckBox = true;
+            this.dtTo.Size = new System.Drawing.Size(132, 20);
+            this.dtTo.TabIndex = 27;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(7, 162);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(23, 13);
+            this.label15.TabIndex = 28;
+            this.label15.Text = "To:";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.chk_useChannel);
+            this.groupBox4.Controls.Add(this.ckTrend);
+            this.groupBox4.Controls.Add(this.chk_useGame);
+            this.groupBox4.Location = new System.Drawing.Point(6, 285);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(296, 44);
+            this.groupBox4.TabIndex = 29;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Filter";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label16);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.label15);
+            this.groupBox5.Controls.Add(this.cbPeriod);
+            this.groupBox5.Controls.Add(this.dtTo);
+            this.groupBox5.Controls.Add(this.cbLimit);
+            this.groupBox5.Controls.Add(this.label14);
+            this.groupBox5.Controls.Add(this.dtFrom);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Controls.Add(this.sTime);
+            this.groupBox5.Location = new System.Drawing.Point(6, 93);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(296, 186);
+            this.groupBox5.TabIndex = 7;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Time-Filter";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
+            this.label16.ForeColor = System.Drawing.Color.Silver;
+            this.label16.Location = new System.Drawing.Point(37, 99);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(227, 13);
+            this.label16.TabIndex = 29;
+            this.label16.Text = "--------------------------------- OR ---------------------------------";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(890, 536);
+            this.ClientSize = new System.Drawing.Size(890, 601);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statusStrip1);
@@ -674,6 +763,10 @@
             this.groupBox2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -730,6 +823,13 @@
         private System.Windows.Forms.Timer versionTimer;
         private System.Windows.Forms.ToolStripStatusLabel lbNewVersion;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DateTimePicker dtFrom;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.DateTimePicker dtTo;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox4;
     }
 }
 

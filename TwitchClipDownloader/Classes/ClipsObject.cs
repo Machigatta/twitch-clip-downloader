@@ -9,5 +9,6 @@ namespace TwitchClipDownloader.Classes
     class ClipsObject
     {
         public List<Clip> clips { get; set; }
+        public string _cursor { get; set; }
     }
 }

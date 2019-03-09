@@ -146,10 +146,13 @@ namespace TwitchClipDownloader
         }
 
         //Basic Logging function
-        public void updateLog(string logContent)
+        public void updateLog(string logContent, bool forContext = true)
         {
             rtLog.Text = logContent +"\r\n" + rtLog.Text;
-            toolTipText.Text = logContent;
+            if (forContext)
+            {
+                toolTipText.Text = logContent;
+            }
         }
 
         //Basic Logging function
@@ -293,9 +296,11 @@ namespace TwitchClipDownloader
             await crawler(true);
         }
 
-        private async Task crawler(bool topOnly)
+        private async Task crawler(bool topOnly, string cursor = "")
         {
             string baseUrl = "https://api.twitch.tv/kraken/clips/top?limit=100";
+
+            bool betweenDates = dtFrom.Checked && dtTo.Checked;
 
             //wird nur gecrawled wenn spiel angegeben
             if (
@@ -311,9 +316,13 @@ namespace TwitchClipDownloader
                 }
 
                 //periode setzen (week ist default)
-                if (cbPeriod.Text != "")
+                if (cbPeriod.Text != "" && !betweenDates)
                 {
                     baseUrl += "&period=" + cbPeriod.Text;
+                }
+                else
+                {
+                    baseUrl += "&period=month";
                 }
 
                 //channel speziefisch
@@ -335,14 +344,19 @@ namespace TwitchClipDownloader
                 }
 
                 //trending ist default auf false
-                if (cbLimit.Text != "")
+                if (cbLimit.Text != "" && !betweenDates)
                 {
                     baseUrl += "&limit=" + cbLimit.Text;
                 }
 
+                if (cursor != "")
+                {
+                    baseUrl += "&cursor=" + cursor;
+                }
+
                 baseUrl = Uri.EscapeUriString(baseUrl);
 
-                updateLog("REQUEST TO: " + baseUrl);
+                updateLog("REQUEST TO: " + baseUrl, false);
                 string testString = await mHandler.sendNewRequest(baseUrl);
 
                 ClipsObject result = (ClipsObject)JsonConvert.DeserializeObject(testString, typeof(ClipsObject));
@@ -353,6 +367,8 @@ namespace TwitchClipDownloader
                 }
 
                 bLookupTop.Enabled = false;
+
+                bool isBehindToDate = false;
 
                 //each clip -> log it
                 foreach (Clip item in result.clips)
@@ -373,26 +389,40 @@ namespace TwitchClipDownloader
                         isValidForDownload = true;
 
                     }
+                    if (betweenDates && ( item.created_at > dtTo.Value || item.created_at < dtFrom.Value))
+                    {
+                        isValidForDownload = false;
+                    }
+
+                    if (item.created_at < dtFrom.Value)
+                    {
+                        isBehindToDate = true;
+                    }
 
                     if (isValidForDownload)
                     {
                         downloadCounter++;
                         mHandler.downloadClip(item);
                     }
-
                 }
 
-                if (downloadCounter == 0)
+                if (betweenDates && (!isBehindToDate || result.clips.Count > 0) && result._cursor != "" && result._cursor != cursor)
                 {
-                    bLookupTop.Enabled = true;
-                    updateLog("---- Could not find any clips ----");
+                    await crawler(topOnly, result._cursor);
                 }
                 else
                 {
-                    updateLog("---- Starting " + downloadCounter + " Downloads ----");
-                    pbDownload.Maximum = downloadCounter;
+                    if (downloadCounter == 0)
+                    {
+                        bLookupTop.Enabled = true;
+                        updateLog("---- Could not find any clips ----");
+                    }
+                    else
+                    {
+                        updateLog("---- Starting " + downloadCounter + " Downloads ----");
+                        pbDownload.Maximum = downloadCounter;
+                    }
                 }
-
             }
             else if (chk_useGame.Checked == false && chk_useChannel.Checked == false)
             {
