@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace TwitchClipDownloader.Classes
 {
-    class Thumbnails
+    class Pagination
     {
-        public string medium { get; set; }
+        public string cursor { get; set; }
     }
 }

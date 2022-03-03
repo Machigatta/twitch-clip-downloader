@@ -8,11 +8,15 @@ namespace TwitchClipDownloader.Classes
 {
     class Clip
     {
-        public string slug { get; set; }
-        public Broadcaster broadcaster { get; set; }
-        public string title { get; set; }
-        public Thumbnails thumbnails { get; set; }
+        public string id { get; set; }
+        public string broadcaster_id { get; set; }
+        public string broadcaster_name { get; set; }
+        public string language { get; set; }
         public DateTime created_at { get; set; }
+        public int view_count { get; set; }
+        public string title { get; set; }
+        public string url { get; set; }
+        public string thumbnail_url { get; set; }
 
 
 

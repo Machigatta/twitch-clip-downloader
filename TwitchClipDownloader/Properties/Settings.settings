@@ -5,19 +5,16 @@
     <Setting Name="savePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\</Value>
     </Setting>
-    <Setting Name="twitchClientId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">h91ejo3shtecvixy0xhcd6mulvitd8</Value>
+    <Setting Name="twitchClientId" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="addToQue" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="twitchClientSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="brd" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="cusec" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="cuseg" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

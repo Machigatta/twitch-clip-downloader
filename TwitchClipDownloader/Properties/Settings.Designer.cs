@@ -12,7 +12,7 @@ namespace TwitchClipDownloader.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -35,12 +35,15 @@ namespace TwitchClipDownloader.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("h91ejo3shtecvixy0xhcd6mulvitd8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string twitchClientId {
             get {
                 return ((string)(this["twitchClientId"]));
+            }
+            set {
+                this["twitchClientId"] = value;
             }
         }
         
@@ -58,6 +61,18 @@ namespace TwitchClipDownloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string twitchClientSecret {
+            get {
+                return ((string)(this["twitchClientSecret"]));
+            }
+            set {
+                this["twitchClientSecret"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool brd {
             get {
@@ -65,30 +80,6 @@ namespace TwitchClipDownloader.Properties {
             }
             set {
                 this["brd"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool cusec {
-            get {
-                return ((bool)(this["cusec"]));
-            }
-            set {
-                this["cusec"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool cuseg {
-            get {
-                return ((bool)(this["cuseg"]));
-            }
-            set {
-                this["cuseg"] = value;
             }
         }
     }

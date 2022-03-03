@@ -15,6 +15,7 @@ using TwitchClipDownloader.Classes;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using VC;
+using System.Globalization;
 
 namespace TwitchClipDownloader
 {
@@ -24,6 +25,9 @@ namespace TwitchClipDownloader
         private TwitchApiHandler mHandler = null;
         private SortedDictionary<string, Clip> que = new SortedDictionary<string, Clip>();
         VersionControl mvc = new VersionControl();
+        private List<GameSingle> t = new List<GameSingle>();
+        private List<Clip> c = new List<Clip>();
+        private Broadcaster b = new Broadcaster();
 
         public MainForm()
         {
@@ -31,17 +35,17 @@ namespace TwitchClipDownloader
             mHandler = new TwitchApiHandler(this);
             InitializeComponent();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            cbGame.SelectedIndex = 0;
-            cbPeriod.SelectedIndex = 0;
-            cbLimit.SelectedItem = "10";
             txtSave.Text = Properties.Settings.Default.savePath;
             lbVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             txtVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             chkAddToQue.Checked = Properties.Settings.Default.addToQue;
             chkUbs.Checked = Properties.Settings.Default.brd;
-            chk_useChannel.Checked = Properties.Settings.Default.cusec;
-            chk_useGame.Checked = Properties.Settings.Default.cuseg;
+
+            txtClientId.Text = Properties.Settings.Default.twitchClientId;
+            txtClientSecret.Text = Properties.Settings.Default.twitchClientSecret;
+
             checkVersionAsync();
+            Task task = LoadGamesAsync();
         }
 
         private void saveLocals()
@@ -49,8 +53,8 @@ namespace TwitchClipDownloader
             Properties.Settings.Default.savePath = txtSave.Text;
             Properties.Settings.Default.addToQue = chkAddToQue.Checked;
             Properties.Settings.Default.brd = chkUbs.Checked;
-            Properties.Settings.Default.cusec = chk_useChannel.Checked;
-            Properties.Settings.Default.cuseg = chk_useGame.Checked;
+            Properties.Settings.Default.twitchClientId = txtClientId.Text;
+            Properties.Settings.Default.twitchClientSecret = txtClientSecret.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -69,7 +73,8 @@ namespace TwitchClipDownloader
  
         private async void bLookupTop_Click(object sender, EventArgs e)
         {
-            await crawler(false);
+            b = await TryToGetBroadcasterID(txtChannel.Text.ToLower());
+            await crawler();
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -89,12 +94,12 @@ namespace TwitchClipDownloader
             
 
 
-            string clipUri = "https://api.twitch.tv/kraken/clips/" + slug;
+            string clipUri = "https://api.twitch.tv/helix/clips?id=" + slug;
 
             string testString = await mHandler.sendNewRequest(clipUri);
 
-            Clip result = (Clip)JsonConvert.DeserializeObject(testString, typeof(Clip));
-            if (result.slug == null)
+            ClipsObject result = (ClipsObject)JsonConvert.DeserializeObject(testString, typeof(ClipsObject));
+            if (result.data == null)
             {
                 updateLog("Nothing found.");
                 txtLink.Text = "";
@@ -102,7 +107,8 @@ namespace TwitchClipDownloader
                 return;
             }
 
-            if (que.ContainsKey(result.slug))
+            Clip c = result.data[0];
+            if (que.ContainsKey(c.id))
             {
                 MessageBox.Show("Already in que.");
                 txtLink.Text = "";
@@ -116,9 +122,9 @@ namespace TwitchClipDownloader
 
             if (chkAddToQue.Checked)
             {
-                result.pre = ( (chkUbs.Checked || txtPre.Text != "") ? ( (chkUbs.Checked) ? result.broadcaster.display_name : txtPre.Text ) : "" );
-                lbQue.Items.Add(Uri.EscapeUriString((result.pre != "" ? (result.pre + "_") : "") + result.slug) + ".mp4");
-                que.Add(result.slug, result);
+                c.pre = ( (chkUbs.Checked || txtPre.Text != "") ? ( (chkUbs.Checked) ? c.broadcaster_name : txtPre.Text ) : "" );
+                lbQue.Items.Add(Uri.EscapeUriString((c.pre != "" ? (c.pre + "_") : "") + c.id) + ".mp4");
+                que.Add(c.id, c);
                 txtLink.Text = "";
                 txtSlug.Text = "";
                 if (chkUbs.Checked)
@@ -138,7 +144,7 @@ namespace TwitchClipDownloader
                 {
                     pbDownload.Maximum++;
                 }
-                mHandler.downloadClip(result);
+                mHandler.downloadClip(c);
                 txtLink.Text = "";
                 txtSlug.Text = "";
             }
@@ -149,6 +155,15 @@ namespace TwitchClipDownloader
         public void updateLog(string logContent, bool forContext = true)
         {
             rtLog.Text = logContent +"\r\n" + rtLog.Text;
+            if (forContext)
+            {
+                toolTipText.Text = logContent;
+            }
+        }
+
+        public void updateLogDetailed(string logContent, bool forContext = true)
+        {
+            rtLogDetailed.Text = logContent + "\r\n" + rtLogDetailed.Text;
             if (forContext)
             {
                 toolTipText.Text = logContent;
@@ -203,6 +218,46 @@ namespace TwitchClipDownloader
             
         }
 
+        private async Task LoadGamesAsync(string cursor = "")
+        {
+            if (t.Count > 50)
+            {
+                cbGame.DataSource = t;
+                cbGame.DisplayMember = "name";
+                updateLog("FINISHED CRAWLING GAMES");
+                return;
+            }
+            string baseUrl = "https://api.twitch.tv/helix/games/top?first=100";
+            if (cursor != "")
+            {
+                baseUrl += "&after=" + cursor;
+            }
+
+            baseUrl = Uri.EscapeUriString(baseUrl);
+            updateLog("CRAWLING GAMES");
+            updateLog("REQUEST TO: " + baseUrl, false);
+            string testString = await mHandler.sendNewRequest(baseUrl);
+            GameObject result = (GameObject)JsonConvert.DeserializeObject(testString, typeof(GameObject));
+
+            if (result.data == null)
+            {
+                updateLog("Nothing found.");
+                return;
+            }
+
+            t.Add(new GameSingle());
+            foreach (GameSingle item in result.data)
+            {
+                updateLogDetailed("Adding Game: " + item.name, false);
+                t.Add(item);
+            }
+
+            if (result.pagination.cursor != "" && result.pagination.cursor != cursor)
+            {
+                await LoadGamesAsync(result.pagination.cursor);
+            }
+        }
+
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             saveLocals();
@@ -235,7 +290,7 @@ namespace TwitchClipDownloader
                 }
                 mHandler.downloadClip(pair.Value);
                 
-                lbQue.Items.Remove(Uri.EscapeUriString((pair.Value.pre != "" ? (pair.Value.pre + "_") : "") + pair.Value.slug) + ".mp4");
+                lbQue.Items.Remove(Uri.EscapeUriString((pair.Value.pre != "" ? (pair.Value.pre + "_") : "") + pair.Value.id) + ".mp4");
             }
 
             que.Clear();
@@ -291,63 +346,46 @@ namespace TwitchClipDownloader
             
         }
 
-        private async void btLookUpTopOnly_Click(object sender, EventArgs e)
+        private async Task<Broadcaster> TryToGetBroadcasterID(string login)
         {
-            await crawler(true);
+            string baseUrl = "https://api.twitch.tv/helix/users?login="+login;
+            baseUrl = Uri.EscapeUriString(baseUrl);
+            updateLog("LOOKING FOR USER: " + login);
+            string testString = await mHandler.sendNewRequest(baseUrl);
+            BroadcasterObject resultO = (BroadcasterObject)JsonConvert.DeserializeObject(testString, typeof(BroadcasterObject));
+            if (resultO.data == null)
+            {
+                updateLog("Nothing found.");
+                return null;
+            }
+            updateLog("FOUND USER: " + resultO.data[0].display_name);
+
+            return resultO.data[0];
         }
 
-        private async Task crawler(bool topOnly, string cursor = "")
+        private async Task crawler(string cursor = "")
         {
-            string baseUrl = "https://api.twitch.tv/kraken/clips/top?limit=100";
+            string baseUrl = "https://api.twitch.tv/helix/clips?first=100";
 
-            bool betweenDates = dtFrom.Checked && dtTo.Checked;
+            GameSingle gs = cbGame.SelectedItem as GameSingle;
 
             //wird nur gecrawled wenn spiel angegeben
-            if (
-                (cbGame.Text != "" && chk_useGame.Checked == true) ||
-                (txtChannel.Text != "" && chk_useChannel.Checked == true) ||
-                topOnly
-                )
+            if ( (gs.id != 0) || (txtChannel.Text != "") )
             {
                 //channel speziefisch
-                if (cbGame.Text != "" && chk_useGame.Checked == true && !topOnly)
+                if (gs.id != 0)
                 {
-                    baseUrl += "&game=" + cbGame.Text;
-                }
-
-                //periode setzen (week ist default)
-                if (cbPeriod.Text != "" && !betweenDates)
-                {
-                    baseUrl += "&period=" + cbPeriod.Text;
-                }
-                else
-                {
-                    baseUrl += "&period=month";
+                    baseUrl += "&game_id=" + gs.id;
                 }
 
                 //channel speziefisch
-                if (txtChannel.Text != "" && chk_useChannel.Checked == true && !topOnly)
+                if (txtChannel.Text != "")
                 {
-                    baseUrl += "&channel=" + txtChannel.Text;
+                    baseUrl += "&broadcaster_id=" + b.id;
                 }
 
-                //trending ist default auf false
-                if (ckTrend.Checked)
-                {
-                    baseUrl += "&trending=true";
-                }
-
-                //trending ist default auf false
-                if (txtLanguage.Text != "")
-                {
-                    baseUrl += "&language=" + txtLanguage.Text;
-                }
-
-                //trending ist default auf false
-                if (cbLimit.Text != "" && !betweenDates)
-                {
-                    baseUrl += "&limit=" + cbLimit.Text;
-                }
+                baseUrl += "&started_at=" + dtFrom.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", DateTimeFormatInfo.InvariantInfo);
+                baseUrl += "&ended_at=" + dtTo.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", DateTimeFormatInfo.InvariantInfo);
 
                 if (cursor != "")
                 {
@@ -360,55 +398,50 @@ namespace TwitchClipDownloader
                 string testString = await mHandler.sendNewRequest(baseUrl);
 
                 ClipsObject result = (ClipsObject)JsonConvert.DeserializeObject(testString, typeof(ClipsObject));
-                if (result.clips == null)
+                if (result.data == null)
                 {
                     updateLog("Nothing found.");
                     return;
                 }
 
-                bLookupTop.Enabled = false;
-
-                bool isBehindToDate = false;
+                updateLog("CLIPS FOUND: " + result.data.Count, false);
 
                 //each clip -> log it
-                foreach (Clip item in result.clips)
+                foreach (Clip item in result.data)
                 {
+                    bool isValidForDownload = true;
+                    bool wrongLanguage = true;
 
-                    bool isValidForDownload = false;
-
-                    if (sTime.Text != "")
+                    foreach (string l in txtLanguage.Text.Split(','))
                     {
-                        if (DateTime.Now < item.created_at.AddHours(Int32.Parse(sTime.Text)))
+                        if (l == item.language)
                         {
-                            isValidForDownload = true;
+                            wrongLanguage = false;
                         }
-
                     }
-                    else
-                    {
-                        isValidForDownload = true;
 
-                    }
-                    if (betweenDates && ( item.created_at > dtTo.Value || item.created_at < dtFrom.Value))
+                    if (wrongLanguage)
                     {
                         isValidForDownload = false;
                     }
 
-                    if (item.created_at < dtFrom.Value)
+                    if (item.created_at > dtTo.Value || item.created_at < dtFrom.Value)
                     {
-                        isBehindToDate = true;
+                        isValidForDownload = false;
                     }
 
-                    if (isValidForDownload)
+                    if (isValidForDownload && c.Count <= numLimit.Value)
                     {
                         downloadCounter++;
+                        updateLogDetailed("Found Clip: " + item.id, false);
+                        c.Add(item);
                         mHandler.downloadClip(item);
                     }
                 }
 
-                if (betweenDates && (!isBehindToDate || result.clips.Count > 0) && result._cursor != "" && result._cursor != cursor)
+                if (result.pagination.cursor != "" && result.pagination.cursor != cursor)
                 {
-                    await crawler(topOnly, result._cursor);
+                    await crawler(result.pagination.cursor);
                 }
                 else
                 {
@@ -424,14 +457,15 @@ namespace TwitchClipDownloader
                     }
                 }
             }
-            else if (chk_useGame.Checked == false && chk_useChannel.Checked == false)
-            {
-                updateLog("At least one of the checkboxes of usage must be checked.");
-            }
             else
             {
                 updateLog("There must be at least a game or channel name given.");
             }
+        }
+
+        public void clearSavedCLips()
+        {
+            c.Clear();
         }
 
         private void MainForm_FormClosing_1(object sender, FormClosingEventArgs e)

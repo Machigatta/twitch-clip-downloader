@@ -69,10 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AuthObject.cs" />
     <Compile Include="Classes\Broadcaster.cs" />
     <Compile Include="Classes\Clip.cs" />
     <Compile Include="Classes\ClipsObject.cs" />
-    <Compile Include="Classes\Thumbnails.cs" />
+    <Compile Include="Classes\GameObject.cs" />
+    <Compile Include="Classes\Pagination.cs" />
     <Compile Include="Classes\TwitchApiHandler.cs" />
     <Compile Include="Classes\VersionControl.cs" />
     <Compile Include="MainForm.cs">
@@ -125,7 +127,9 @@
   <ItemGroup>
     <Content Include="if_twitch-2048-black_167721.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
