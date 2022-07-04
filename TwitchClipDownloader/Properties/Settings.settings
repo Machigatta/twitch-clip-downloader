@@ -14,8 +14,8 @@
     <Setting Name="twitchClientSecret" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="brd" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="saveSyntax" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{broadcaster_name}_{views}_{date}</Value>
     </Setting>
   </Settings>
 </SettingsFile>

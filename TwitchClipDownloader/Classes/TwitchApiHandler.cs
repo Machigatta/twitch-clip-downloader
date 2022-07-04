@@ -18,7 +18,10 @@ namespace TwitchClipDownloader.Classes
         public TwitchApiHandler(MainForm activeForm)
         {
             form = activeForm;
-            _A = GetAuthorizeToken().Result;
+            if (Properties.Settings.Default.twitchClientId != "" && Properties.Settings.Default.twitchClientSecret != "")
+            {
+                getAuthToken();
+            }
         }
 
         public async Task<string> sendNewRequest(string url)
@@ -47,7 +50,7 @@ namespace TwitchClipDownloader.Classes
             using (WebClient wc = new WebClient())
             {
                 wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
-                string fileName = Uri.EscapeUriString( (item.pre != "" ? (item.pre+"_") : "") + item.id);
+                string fileName = Uri.EscapeUriString( item.syntaxed_name );
                 wc.DownloadFileAsync(new System.Uri(@downloadUri), Properties.Settings.Default.savePath.Replace("\\", "\\\\") + fileName + ".mp4");
 
                 form.updateLog("---- " + downloadUri + " ----");
@@ -86,6 +89,11 @@ namespace TwitchClipDownloader.Classes
             }
 
             return a;
+        }
+
+        public void getAuthToken()
+        {
+            _A = GetAuthorizeToken().Result;
         }
 
 

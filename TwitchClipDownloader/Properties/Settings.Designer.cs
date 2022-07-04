@@ -73,13 +73,13 @@ namespace TwitchClipDownloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool brd {
+        [global::System.Configuration.DefaultSettingValueAttribute("{broadcaster_name}_{views}_{date}")]
+        public string saveSyntax {
             get {
-                return ((bool)(this["brd"]));
+                return ((string)(this["saveSyntax"]));
             }
             set {
-                this["brd"] = value;
+                this["saveSyntax"] = value;
             }
         }
     }

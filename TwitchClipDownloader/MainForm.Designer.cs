@@ -51,12 +51,11 @@
             this.lbQue = new System.Windows.Forms.ListBox();
             this.btStartDownloadQue = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.chkUbs = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.chkAddToQue = new System.Windows.Forms.CheckBox();
             this.txtSlug = new System.Windows.Forms.TextBox();
-            this.txtPre = new System.Windows.Forms.TextBox();
+            this.txtSyntax = new System.Windows.Forms.TextBox();
             this.btDownloadByLink = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.txtLink = new System.Windows.Forms.TextBox();
@@ -113,7 +112,7 @@
             // bLookupTop
             // 
             this.bLookupTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bLookupTop.Location = new System.Drawing.Point(227, 204);
+            this.bLookupTop.Location = new System.Drawing.Point(227, 230);
             this.bLookupTop.Name = "bLookupTop";
             this.bLookupTop.Size = new System.Drawing.Size(75, 23);
             this.bLookupTop.TabIndex = 2;
@@ -140,7 +139,7 @@
             // btSave
             // 
             this.btSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btSave.Location = new System.Drawing.Point(182, 204);
+            this.btSave.Location = new System.Drawing.Point(182, 230);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(75, 23);
             this.btSave.TabIndex = 12;
@@ -178,7 +177,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox1.Location = new System.Drawing.Point(12, 36);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(308, 236);
+            this.groupBox1.Size = new System.Drawing.Size(308, 259);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Crawler";
@@ -286,7 +285,7 @@
             // btStartDownloadQue
             // 
             this.btStartDownloadQue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btStartDownloadQue.Location = new System.Drawing.Point(183, 204);
+            this.btStartDownloadQue.Location = new System.Drawing.Point(183, 230);
             this.btStartDownloadQue.Name = "btStartDownloadQue";
             this.btStartDownloadQue.Size = new System.Drawing.Size(98, 23);
             this.btStartDownloadQue.TabIndex = 5;
@@ -297,13 +296,10 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.lbQue);
-            this.groupBox3.Controls.Add(this.chkUbs);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.btStartDownloadQue);
-            this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.chkAddToQue);
             this.groupBox3.Controls.Add(this.txtSlug);
-            this.groupBox3.Controls.Add(this.txtPre);
             this.groupBox3.Controls.Add(this.btDownloadByLink);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.txtLink);
@@ -311,21 +307,10 @@
             this.groupBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox3.Location = new System.Drawing.Point(322, 36);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(287, 236);
+            this.groupBox3.Size = new System.Drawing.Size(287, 259);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Direct Download ";
-            // 
-            // chkUbs
-            // 
-            this.chkUbs.AutoSize = true;
-            this.chkUbs.Location = new System.Drawing.Point(43, 93);
-            this.chkUbs.Name = "chkUbs";
-            this.chkUbs.Size = new System.Drawing.Size(148, 17);
-            this.chkUbs.TabIndex = 5;
-            this.chkUbs.Text = "Use Broadcaster as Prefix";
-            this.chkUbs.UseVisualStyleBackColor = true;
-            this.chkUbs.CheckedChanged += new System.EventHandler(this.chkUseBroadcasterAsPre_CheckedChanged);
             // 
             // label7
             // 
@@ -339,16 +324,16 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 70);
+            this.label13.Location = new System.Drawing.Point(6, 93);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(36, 13);
+            this.label13.Size = new System.Drawing.Size(73, 13);
             this.label13.TabIndex = 4;
-            this.label13.Text = "Prefix:";
+            this.label13.Text = "Name-Syntax:";
             // 
             // chkAddToQue
             // 
             this.chkAddToQue.AutoSize = true;
-            this.chkAddToQue.Location = new System.Drawing.Point(197, 93);
+            this.chkAddToQue.Location = new System.Drawing.Point(197, 70);
             this.chkAddToQue.Name = "chkAddToQue";
             this.chkAddToQue.Size = new System.Drawing.Size(80, 17);
             this.chkAddToQue.TabIndex = 2;
@@ -363,17 +348,17 @@
             this.txtSlug.Size = new System.Drawing.Size(234, 20);
             this.txtSlug.TabIndex = 0;
             // 
-            // txtPre
+            // txtSyntax
             // 
-            this.txtPre.Location = new System.Drawing.Point(43, 67);
-            this.txtPre.Name = "txtPre";
-            this.txtPre.Size = new System.Drawing.Size(234, 20);
-            this.txtPre.TabIndex = 3;
+            this.txtSyntax.Location = new System.Drawing.Point(9, 114);
+            this.txtSyntax.Name = "txtSyntax";
+            this.txtSyntax.Size = new System.Drawing.Size(248, 20);
+            this.txtSyntax.TabIndex = 3;
             // 
             // btDownloadByLink
             // 
             this.btDownloadByLink.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btDownloadByLink.Location = new System.Drawing.Point(71, 204);
+            this.btDownloadByLink.Location = new System.Drawing.Point(71, 230);
             this.btDownloadByLink.Name = "btDownloadByLink";
             this.btDownloadByLink.Size = new System.Drawing.Size(106, 23);
             this.btDownloadByLink.TabIndex = 2;
@@ -434,7 +419,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(7, 93);
+            this.label4.Location = new System.Drawing.Point(4, 143);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(210, 108);
             this.label4.TabIndex = 0;
@@ -489,9 +474,11 @@
             this.groupBox2.Controls.Add(this.txtClientSecret);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.txtClientId);
+            this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.btLfSavePath);
             this.groupBox2.Controls.Add(this.lbVersion);
+            this.groupBox2.Controls.Add(this.txtSyntax);
             this.groupBox2.Controls.Add(this.btSave);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.txtSave);
@@ -499,7 +486,7 @@
             this.groupBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.groupBox2.Location = new System.Drawing.Point(615, 36);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(263, 236);
+            this.groupBox2.Size = new System.Drawing.Size(263, 259);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings";
@@ -703,9 +690,8 @@
         private System.Windows.Forms.CheckBox chkAddToQue;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.RichTextBox rtLog;
-        private System.Windows.Forms.CheckBox chkUbs;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtPre;
+        private System.Windows.Forms.TextBox txtSyntax;
         private System.Windows.Forms.Button btStartDownloadQue;
         private System.Windows.Forms.ListBox lbQue;
         private System.Windows.Forms.GroupBox groupBox2;

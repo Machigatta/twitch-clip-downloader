@@ -17,8 +17,7 @@ namespace TwitchClipDownloader.Classes
         public string title { get; set; }
         public string url { get; set; }
         public string thumbnail_url { get; set; }
-
-
+        public string syntaxed_name { get; set; }
 
         //custom
         public string pre { get; set; }

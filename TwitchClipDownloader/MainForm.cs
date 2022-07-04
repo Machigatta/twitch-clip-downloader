@@ -39,22 +39,29 @@ namespace TwitchClipDownloader
             lbVersion.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             txtVersion.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
             chkAddToQue.Checked = Properties.Settings.Default.addToQue;
-            chkUbs.Checked = Properties.Settings.Default.brd;
+            txtSyntax.Text = Properties.Settings.Default.saveSyntax;
 
             txtClientId.Text = Properties.Settings.Default.twitchClientId;
             txtClientSecret.Text = Properties.Settings.Default.twitchClientSecret;
 
             checkVersionAsync();
-            Task task = LoadGamesAsync();
+            if (Properties.Settings.Default.twitchClientId != "" && Properties.Settings.Default.twitchClientSecret != "")
+            {
+                Task task = LoadGamesAsync();
+            }
+            else
+            {
+                MessageBox.Show("ClientID and Secret needs to be added. After you press the save-button everything gets initialized.");
+            }
         }
 
         private void saveLocals()
         {
             Properties.Settings.Default.savePath = txtSave.Text;
             Properties.Settings.Default.addToQue = chkAddToQue.Checked;
-            Properties.Settings.Default.brd = chkUbs.Checked;
             Properties.Settings.Default.twitchClientId = txtClientId.Text;
             Properties.Settings.Default.twitchClientSecret = txtClientSecret.Text;
+            Properties.Settings.Default.saveSyntax = txtSyntax.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -80,6 +87,9 @@ namespace TwitchClipDownloader
         private void btSave_Click(object sender, EventArgs e)
         {
             saveLocals();
+            t.Clear();
+            mHandler.getAuthToken();
+            Task task = LoadGamesAsync();
         }
 
         private async void buildDownloadStringBySlug(string slug)
@@ -108,29 +118,21 @@ namespace TwitchClipDownloader
             }
 
             Clip c = result.data[0];
+            c.syntaxed_name = getSyntaxedName(c);
             if (que.ContainsKey(c.id))
             {
                 MessageBox.Show("Already in que.");
                 txtLink.Text = "";
                 txtSlug.Text = "";
-                if (chkUbs.Checked)
-                {
-                    txtPre.Text = "";
-                }
                 return;
             }
 
             if (chkAddToQue.Checked)
             {
-                c.pre = ( (chkUbs.Checked || txtPre.Text != "") ? ( (chkUbs.Checked) ? c.broadcaster_name : txtPre.Text ) : "" );
                 lbQue.Items.Add(Uri.EscapeUriString((c.pre != "" ? (c.pre + "_") : "") + c.id) + ".mp4");
                 que.Add(c.id, c);
                 txtLink.Text = "";
                 txtSlug.Text = "";
-                if (chkUbs.Checked)
-                {
-                    txtPre.Text = "";
-                }
             }
             else
             {
@@ -346,6 +348,15 @@ namespace TwitchClipDownloader
             
         }
 
+        private string getSyntaxedName(Clip c)
+        {
+            string s = txtSyntax.Text.
+                Replace("{broadcaster_name}", c.broadcaster_name).
+                Replace("{views}", c.view_count.ToString()).
+                Replace("{date}", c.created_at.ToString("dd#mm#yyyy"));
+            return s;
+        }
+
         private async Task<Broadcaster> TryToGetBroadcasterID(string login)
         {
             string baseUrl = "https://api.twitch.tv/helix/users?login="+login;
@@ -362,6 +373,7 @@ namespace TwitchClipDownloader
 
             return resultO.data[0];
         }
+
 
         private async Task crawler(string cursor = "")
         {
@@ -383,9 +395,11 @@ namespace TwitchClipDownloader
                 {
                     baseUrl += "&broadcaster_id=" + b.id;
                 }
+                DateTime dtF = Convert.ToDateTime(dtFrom.Value.ToLongDateString() + " " + "00:00:00");
+                DateTime dtT = Convert.ToDateTime(dtTo.Value.ToLongDateString() + " " + "23:59:59");
 
-                baseUrl += "&started_at=" + dtFrom.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", DateTimeFormatInfo.InvariantInfo);
-                baseUrl += "&ended_at=" + dtTo.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", DateTimeFormatInfo.InvariantInfo);
+                baseUrl += "&started_at=" + dtF.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", DateTimeFormatInfo.InvariantInfo);
+                baseUrl += "&ended_at=" + dtT.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", DateTimeFormatInfo.InvariantInfo);
 
                 if (cursor != "")
                 {
@@ -425,7 +439,7 @@ namespace TwitchClipDownloader
                         isValidForDownload = false;
                     }
 
-                    if (item.created_at > dtTo.Value || item.created_at < dtFrom.Value)
+                    if (item.created_at > dtT || item.created_at < dtF)
                     {
                         isValidForDownload = false;
                     }
@@ -434,6 +448,7 @@ namespace TwitchClipDownloader
                     {
                         downloadCounter++;
                         updateLogDetailed("Found Clip: " + item.id, false);
+                        item.syntaxed_name = getSyntaxedName(item);
                         c.Add(item);
                         mHandler.downloadClip(item);
                     }
